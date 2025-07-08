@@ -4,16 +4,6 @@
 
 ---
 
-## ✨ Features
-
-- Real-time recursive estimation of the phase of multidimensional signals
-- Automatic detection of the first pseudo-periodic cycle via autocorrelation
-- Optional alignment to a reference baseline movement
-- Configurable low-pass filters for both position and phase signals
-- Error comparison with real (ground truth) phase if available
-
----
-
 ## 📁 Project Structure
 
 ```
