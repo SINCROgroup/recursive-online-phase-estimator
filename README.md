@@ -21,7 +21,7 @@
 
 Depending on the use case, ROPE can be run in one of two modes. Below are the required settings for each.
 
-### 1. 📡 Untethered Mode
+### 1. Untethered Mode
 
 > Use this mode when estimating the phase of a single signal, without aligning it to a reference.
 
@@ -38,7 +38,7 @@ Required parameters:
 
 ---
 
-### 2. 🧭 Tethered Mode
+### 2. Tethered Mode
 
 > Use this mode to align the estimated phase with a reference baseline cycle (useful for comparisons between signals).
 
