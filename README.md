@@ -54,7 +54,7 @@ Required additional parameters:
 Ensure that:
 
 - The estimand and baseline trajectories are expressed in their own local frames
-- The reference cycle is clean and contains at least one complete pseudo-period
+- The reference cycle contains one complete pseudo-period
 
 ---
 
