@@ -126,7 +126,7 @@ ax1.plot(time_signal[idx_start:idx_end],
          color=colors[4], linewidth=2, linestyle='--', label='Benchmark')
 ax1.plot(time_signal[idx_start:idx_end],
          estimated_phase[idx_start:idx_end],
-         color=colors[2], linewidth=2, linestyle='-', label='Rope')
+         color=colors[2], linewidth=2, linestyle='-', label='ROPE')
 ax1.set_ylabel('Phase [rad]')
 ax1.legend()
 ax1.grid(True)
