@@ -70,7 +70,7 @@ The script will:
 
 1. Load 3D position data and reference frames
 2. Run ROPE to estimate the online phase
-3. Optionally compare it with the benchmark (ground truth) phase
+3. Compare it with the benchmark (ground truth) phase
 4. Plot:
    - Estimated vs benchmark phase
    - Estimation error
