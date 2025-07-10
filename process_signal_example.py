@@ -19,7 +19,7 @@ time_step = 0.01
 is_use_baseline = True
 time_step_baseline = 0.01
 
-# File paths data
+# File path
 file_path_estimand = r"example/data/Human_motion/spiral_mc_1.csv"
 
 
@@ -62,7 +62,7 @@ else:
     ref_frame_estimand_points = []
     ref_frame_baseline_points = []
 
-# Initialize estimator
+# Initialize ROPE estimator
 n_dims_estimand_pos = estimand_pos_signal.shape[1]
 phase_estimator = RecursiveOnlinePhaseEstimator(
     n_dims_estimand_pos=n_dims_estimand_pos,
@@ -119,7 +119,7 @@ estimated_phase = np.array(phase_estimand_online, dtype=float)
 phase_error = np.abs(np.angle(np.exp(1j * (real_phase[idx_start:idx_end] - estimated_phase[idx_start:idx_end]))))
 
 
-# --- Subplot 1: Real vs Estimated Phase ---
+# --- Subplot 1: Real vs estimated phase ---
 ax1 = fig.add_subplot(311)
 ax1.plot(time_signal[idx_start:idx_end],
          real_phase[idx_start:idx_end],
@@ -131,7 +131,7 @@ ax1.set_ylabel('Phase [rad]')
 ax1.legend()
 ax1.grid(True)
 
-# --- Subplot 2: Phase Error ---
+# --- Subplot 2: Phase error ---
 ax2 = fig.add_subplot(312)
 ax2.plot(time_signal[idx_start:idx_end],
          phase_error,
@@ -140,7 +140,7 @@ ax2.set_ylabel('Error [rad]')
 ax2.legend()
 ax2.grid(True)
 
-# --- Subplot 3: 3D Trajectory of Selected Loop ---
+# --- Subplot 3: 3D trajectory of selected loop ---
 ax3 = fig.add_subplot(313, projection='3d')
 idx_3d_start = np.argmax(time_signal >= phase_estimator.delimiter_time_instants[loop_index_to_plot - 1])
 idx_3d_end = np.argmax(time_signal > phase_estimator.delimiter_time_instants[loop_index_to_plot])
@@ -156,6 +156,6 @@ ax3.set_yticklabels([])
 ax3.set_zticklabels([])
 ax3.legend()
 
-# --- Final Layout ---
+# --- Final layout ---
 plt.tight_layout()
 plt.show()
