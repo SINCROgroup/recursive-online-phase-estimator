@@ -1,6 +1,6 @@
 # Recursive Online Phase Estimator (ROPE)
 
-**ROPE** is a Python algorithm designed for online phase estimation of quasi-periodic, multidimensional signals. It is particularly useful for signals such as 3D trajectories acquired via motion capture or wearable sensors. The algorithm estimates phase in real time and optionally aligns it to a reference cycle (baseline), making it suitable for comparative movement analysis.
+**ROPE** is a Python algorithm designed for online phase estimation of quasi-periodic, multidimensional signals. The algorithm estimates phase in real time and optionally aligns it to a reference cycle (baseline), making it suitable for comparative movement analysis.
 
 ---
 
