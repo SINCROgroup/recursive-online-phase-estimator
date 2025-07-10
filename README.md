@@ -10,8 +10,8 @@
 ├── RecursiveOnlinePhaseEstimator.py      # Main algorithm
 ├── low_pass_filters.py                   # Low-pass filter definitions
 ├── wrap_functions.py                     # Utility functions for phase wrapping
+├── process_signal_example.py             # Example usage script
 ├── example/
-│   ├── process_signal_example.py         # Example usage script
 │   └── data                              # Example data
 ```
 
