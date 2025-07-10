@@ -13,6 +13,7 @@
 ├── process_signal_example.py             # Example usage script
 ├── example/
 │   └── data                              # Example data
+│   └── Figures                           # Example figure
 ```
 
 ---
