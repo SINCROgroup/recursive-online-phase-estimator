@@ -79,7 +79,7 @@ The script will:
 
 ## 📊 Example Output
 
-![Phase Estimation Example](example/figures/phase_estimation.png)
+![Phase Estimation Example](example/figures/Figure_example_spiral_human_motion.png)
 
 ---
 
