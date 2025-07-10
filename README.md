@@ -60,10 +60,10 @@ Ensure that:
 
 ## 🚀 Running the Example
 
-The file `example/process_signal_example.py` demonstrates how to use ROPE with recorded spiral 3D motion data.
+The file `process_signal_example.py` demonstrates how to use ROPE with recorded spiral 3D motion data.
 
 ```bash
-python example/process_signal_example.py
+python process_signal_example.py
 ```
 
 The script will:
