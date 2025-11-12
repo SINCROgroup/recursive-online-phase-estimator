@@ -101,4 +101,13 @@ Distributed under the MIT License. Feel free to use, modify, and cite this repos
 ---
 
 
-If you use this code for research, please cite the related paper (available upon request).
+If you use this code for research, please cite the paper
+
+```
+@article{spallone2025rope,
+  title={ROPE: A Novel Method for Real-Time Phase Estimation of Complex Biological Rhythms},
+  author={Spallone, Antonio and Coraggio, Marco and De Lellis, Francesco and di Bernardo, Mario},
+  journal={arXiv preprint arXiv:2509.04962},
+  year={2025}
+}
+```
