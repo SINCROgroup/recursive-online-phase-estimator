@@ -322,23 +322,6 @@ def compute_loop_with_autocorrelation(pos_signal, vel_signal, local_time_vec, mi
     return np.column_stack((pos_loop, vel_loop))
 
 
-def compute_autocorr_vec(signal: np.ndarray) -> np.ndarray:
-    max_lag = len(signal) // 2
-    autocorr_vec = np.zeros(max_lag + 1)
-
-    for lag in range(1, len(autocorr_vec)):
-        var = np.var(signal[0:2 * lag])
-        if var == 0:
-            autocorr_vec[lag] = 0
-        else:
-            mean = np.mean(signal[0:2 * lag])
-            sum_ = 0
-            for t in range(lag):
-                sum_ += (signal[t] - mean) * (signal[t + lag] - mean)
-            autocorr_vec[lag] = sum_ / (lag * var)
-    return autocorr_vec
-
-
 def compute_idx_min_distance(pos_signal, vel_signal, curr_pos, curr_vel) -> int:
     distances_pos = np.sqrt(np.sum((pos_signal - curr_pos) ** 2, axis=1))
     distances_vel = np.sqrt(np.sum((vel_signal - curr_vel) ** 2, axis=1))
