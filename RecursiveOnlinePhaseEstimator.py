@@ -73,6 +73,7 @@ class RecursiveOnlinePhaseEstimator:
         self.local_phase_signal      = []  # local:  without offset
         self.global_phase_signal     = []  # global: with offset
         self.new_loop                = []
+        self.autocorr_vect           = [] 
         self.idx_curr_phase_in_latest_loop = 0
 
 
@@ -128,6 +129,8 @@ class RecursiveOnlinePhaseEstimator:
 
             case "listening":
                 self.update_pos_vel(curr_pos)
+                if len(self.pos_signal) % 2 == 0:
+                    self.compute_autocorr_vec()
                 return None
 
             case "estimating":
@@ -138,7 +141,8 @@ class RecursiveOnlinePhaseEstimator:
                         pos_signal=self.pos_signal,
                         vel_signal=self.vel_signal,
                         local_time_vec=self.local_time_signal,
-                        min_duration_pseudoperiod=self.min_duration_pseudoperiod)
+                        min_duration_pseudoperiod=self.min_duration_pseudoperiod,
+                        autocorr_vec_tot=self.autocorr_vect)
                     self.update_look_ranges()
 
                     self.delimiter_time_instants.append(float(self.local_time_signal[self.idx_time_start_listening] + self.time_estimator_started))
@@ -260,6 +264,34 @@ class RecursiveOnlinePhaseEstimator:
 
 
 
+def compute_autocorr_vec(self):
+
+        X = np.asarray(self.pos_signal, dtype=np.float64)   # shape (T, n_dim)
+        T, n_dim = X.shape
+        lag = T // 2
+        if lag == 0:
+            self.autocorr_vect.append(0.0)
+            return
+
+        # segmenti di lunghezza "lag"
+        X0 = X[:lag, :]
+        X1 = X[lag:2*lag, :]
+
+        # media/varianza sull'intera serie (come nel codice originale)
+        mean = X.mean(axis=0)
+        var = X.var(axis=0)
+
+        # numeratore: somma_t (x_t - mean)*(x_{t+lag} - mean) per colonna
+        num = np.einsum('ij,ij->j', X0 - mean, X1 - mean)
+
+        # gestisci varianza zero senza ramificare per dimensione
+        autocorr = np.zeros(n_dim, dtype=np.float64)
+        nz = var > 0
+        autocorr[nz] = num[nz] / (lag * var[nz])
+
+        self.autocorr_vect.append(autocorr.sum())
+
+
 ##################################################
 # Helper functions
 ##################################################
@@ -267,20 +299,13 @@ class RecursiveOnlinePhaseEstimator:
 threshold_acceptable_peaks_wrt_maximum_pcent = 20  # Acceptance range of autocorrelation peaks defined as a percentage of the maximum autocorrelation value.
 
 
-def compute_loop_with_autocorrelation(pos_signal, vel_signal, local_time_vec, min_duration_pseudoperiod) -> np.ndarray:
-    n_dim = len(pos_signal[0])
+def compute_loop_with_autocorrelation(pos_signal, vel_signal, local_time_vec, min_duration_pseudoperiod,autocorr_vec_tot) -> np.ndarray:
     pos_signal_stacked = np.vstack(pos_signal)  # time flows vertically
     vel_signal_stacked = np.vstack(vel_signal)
 
-    pos_signal_unstacked = np.full(n_dim, None)
-    autocorr_vecs_per_dim = np.full(n_dim, None)
-    for i in range(n_dim):
-        pos_signal_unstacked[i] = pos_signal_stacked[:, i]
-        autocorr_vecs_per_dim[i] = compute_autocorr_vec(detrend(pos_signal_unstacked[i]))
-    autocorr_vec_tot = np.sum(np.array(autocorr_vecs_per_dim), axis=0)
-
     idx_min_length = np.argmax(np.array(local_time_vec) > min_duration_pseudoperiod)  # argmax finds the first True
-    autocorr_vec_tot[:idx_min_length] = autocorr_vec_tot[idx_min_length]
+    autocorr_vec_tot[:idx_min_length] = np.full(idx_min_length, autocorr_vec_tot[idx_min_length])
+
 
     autocorr_vec_tot = autocorr_vec_tot / np.max(np.abs(autocorr_vec_tot))
 
