@@ -264,32 +264,32 @@ class RecursiveOnlinePhaseEstimator:
 
 
 
-def compute_autocorr_vec(self):
-
-        X = np.asarray(self.pos_signal, dtype=np.float64)   # shape (T, n_dim)
-        T, n_dim = X.shape
-        lag = T // 2
-        if lag == 0:
-            self.autocorr_vect.append(0.0)
-            return
-
-        # segmenti di lunghezza "lag"
-        X0 = X[:lag, :]
-        X1 = X[lag:2*lag, :]
-
-        # media/varianza sull'intera serie (come nel codice originale)
-        mean = X.mean(axis=0)
-        var = X.var(axis=0)
-
-        # numeratore: somma_t (x_t - mean)*(x_{t+lag} - mean) per colonna
-        num = np.einsum('ij,ij->j', X0 - mean, X1 - mean)
-
-        # gestisci varianza zero senza ramificare per dimensione
-        autocorr = np.zeros(n_dim, dtype=np.float64)
-        nz = var > 0
-        autocorr[nz] = num[nz] / (lag * var[nz])
-
-        self.autocorr_vect.append(autocorr.sum())
+    def compute_autocorr_vec(self):
+    
+            X = np.asarray(self.pos_signal, dtype=np.float64)   # shape (T, n_dim)
+            T, n_dim = X.shape
+            lag = T // 2
+            if lag == 0:
+                self.autocorr_vect.append(0.0)
+                return
+    
+            # segmenti di lunghezza "lag"
+            X0 = X[:lag, :]
+            X1 = X[lag:2*lag, :]
+    
+            # media/varianza sull'intera serie (come nel codice originale)
+            mean = X.mean(axis=0)
+            var = X.var(axis=0)
+    
+            # numeratore: somma_t (x_t - mean)*(x_{t+lag} - mean) per colonna
+            num = np.einsum('ij,ij->j', X0 - mean, X1 - mean)
+    
+            # gestisci varianza zero senza ramificare per dimensione
+            autocorr = np.zeros(n_dim, dtype=np.float64)
+            nz = var > 0
+            autocorr[nz] = num[nz] / (lag * var[nz])
+    
+            self.autocorr_vect.append(autocorr.sum())
 
 
 ##################################################
